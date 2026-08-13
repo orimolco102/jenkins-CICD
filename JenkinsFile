@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage ('checkout') {
+            steps {
+                echo "pull from the cloud"
+                checkout scm
+            }
+        }
+
+        stage ('install') {
+            steps {
+                echo "install dependencies"
+                sh "npi ci"
+            }
+        }
+
+        stage ('test') {
+            echo "runing tests"
+            sh "npm test"
+        }
+
+        stage ('build and push') {
+            steps {
+                echo "build docker image"
+                sh 'docker build -t jenkins:${BUILD_NUMBER} -t jenkins:latest .'
+            }
+        }
+
+        stage ('deploy') {
+            steps {
+                echo "runs the new version on port 8001"
+                sh "docker run -d --name greets-live -p 8001:8000 jenkins:latest"
+            }
+        }
+    }
+
+    post {
+        success { echo "CICD poiplene deployment successfuly" }
+        faliure { echo "Failed to deploy" }
+    }
+
+
+}
