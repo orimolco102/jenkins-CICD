@@ -13,13 +13,15 @@ pipeline {
         stage ('install') {
             steps {
                 echo "install dependencies"
-                sh "npi ci"
+                sh "npm ci"
             }
         }
 
         stage ('test') {
-            echo "runing tests"
-            sh "npm test"
+            steps {
+                echo "runing tests"
+                sh "npm test"
+            }
         }
 
         stage ('build and push') {
@@ -39,8 +41,6 @@ pipeline {
 
     post {
         success { echo "CICD poiplene deployment successfuly" }
-        faliure { echo "Failed to deploy" }
+        failure { echo "Failed to deploy" }
     }
-
-
 }
