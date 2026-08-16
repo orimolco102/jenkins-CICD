@@ -6,7 +6,8 @@ const greetings = [
   "Good evening! I hope you had a great day today.",
   "Hey there! Great to connect with you.",
   "Welcome! We're so glad you decided to join us.",
-  "Greetings and warm wishes to you today!"
+  "Greetings and warm wishes to you today!",
+  "Good night! I hope you had a good day."
 ];
 
 
